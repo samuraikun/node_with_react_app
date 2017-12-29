@@ -6,5 +6,6 @@ module.exports = {
   cookieKey: process.env.COOKIE_KEY,
   googleRedirestURI: 'https://obscure-fortress-50217.herokuapp.com',
   stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-  stripeSecretKey: process.env.STRIPE_SECRET_KEY
+  stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+  sendGridKey: process.env.SEND_GRID_KEY
 };
