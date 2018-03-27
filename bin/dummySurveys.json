@@ -1,0 +1,59 @@
+[
+  {
+    "title": "test1",
+    "body": "this is test.",
+    "subject": "sub title",
+    "recipients": [
+      {
+        "email": "hoge@sample.com",
+        "responded": true
+      },
+      {
+        "email": "fuga@sample.com",
+        "responded": false
+      },
+      {
+        "email": "spam@sample.com",
+        "responded": true
+      }
+    ]
+  },
+  {
+    "title": "test2",
+    "body": "this is test.",
+    "subject": "sub title",
+    "recipients": [
+      {
+        "email": "ghaldja@sample.com",
+        "responded": true
+      },
+      {
+        "email": "ghadljal@sample.com",
+        "responded": false
+      },
+      {
+        "email": "ghadlajfl;@sample.com",
+        "responded": true
+      }
+    ]
+  },
+  {
+    "title": "test3",
+    "body": "this is test.",
+    "subject": "sub title",
+    "recipients": [
+      {
+        "email": "ghaldjaea@sample.com",
+        "responded": true
+      },
+      {
+        "email": "ghadlahl@sample.com",
+        "responded": false
+      },
+      {
+        "email": "test3@sample.com",
+        "responded": true
+      }
+    ]
+  }
+]
