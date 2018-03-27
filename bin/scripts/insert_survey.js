@@ -12,14 +12,14 @@ const dummySurveys = require('../dummySurveys.json');
 mongoose.connect(keys.mongoURL);
 
 const save_survey = async (data) => {
-  const user = User.findOne({ googleId: 'replace your googleId' });
+  const user = await User.findOne({ googleId: '115396250142122631475' });
   
   const survey = new Survey({
     title: data.title,
     subject: data.subject,
     body: data.body,
     recipients: data.recipients,
-    _user: user._id,
+    _user: user['_id'],
     dateSent: Date.now()
   });
 
