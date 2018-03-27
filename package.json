@@ -31,5 +31,8 @@
     "path-parser": "^4.0.1",
     "sendgrid": "^5.2.3",
     "stripe": "^5.4.0"
+  },
+  "devDependencies": {
+    "redux-devtools": "^3.4.1"
   }
 }
