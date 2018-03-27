@@ -1,3 +1,6 @@
+const _ = require('lodash');
+const Path = require('path-parser');
+const { URL } = require('url');
 const mongoose = require('mongoose');
 const requireLogin = require('../middlewares/requireLogin');
 const requireCredits = require('../middlewares/requireCredits');
@@ -12,11 +15,40 @@ module.exports = app => {
   });
 
   app.post('/api/surveys/webhooks', (req, res) => {
-    console.log(req.body);
+    const p = new Path('/api/surveys/:surveyId/:choice')
+
+    const events = _.chain(req.body)
+      .map(({ email, url }) => {
+        const match = p.test(new URL(url).pathname);
+        if (match) {
+          return { email, surveyId: match.surveyId, choice: match.choice };
+        }
+      })
+      .compact()
+      .unionBy('email', 'surveyId')
+      .each(({ surveyId, email, choice }) => {
+        Survey.updateOne({
+          _id: surveyId,
+          recipients: {
+            $elemMatch: { email: email, responded: false }
+          }
+        }, {
+          $inc: { [choice]: 1 },
+          $set: { 'recipients.$.responded': true }
+        }).exec();
+      })
+      .value();
+
+    // console.log(events);
+    // events is like this.
+    // [ { email: 'devemaily@gmail.com',
+    //     surveyId: '47597038hfdso473940vdfs9',
+    //     choice: 'yes' } ]
+
     res.send({});
   });
 
-  app.post('/api/surveys', requireLogin, requireCredits, async (req, res) => {
+  app.post('/api/surveys', requireLogin, async (req, res) => {
     const { title, subject, body, recipients } = req.body;
 
     const survey = new Survey({
@@ -32,6 +64,7 @@ module.exports = app => {
     const mailer = new Mailer(survey, surveyTemplate(survey));
     
     try {
+      // TODO disable to send email
       await mailer.send();
       await survey.save();
       req.user.credits -= 1;
